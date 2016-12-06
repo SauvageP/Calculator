@@ -24,7 +24,16 @@ class ViewController: UIViewController {
 		}
 		userIsInTheMiddleOfTyping = true
 	}
-
+	
+	@IBAction func performOperation(_ sender: UIButton) {
+		if let mathSymbol = sender.currentTitle {
+			if mathSymbol == "π" {
+				display.text = String(M_PI)
+			} else {
+				display.text = String("√")
+			}
+		}
+	}
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
