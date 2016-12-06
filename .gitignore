@@ -64,7 +64,6 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 
-Calculator/
 Calculator.xcodeproj/
 CalculatorTests/
 CalculatorUITests
