@@ -21,12 +21,17 @@ class CalculatorBrain {
 		"e" : Operation.Constant(M_E),
 		"√" : Operation.UnaryOperation(sqrt),
 		"cos" : Operation.UnaryOperation(cos),
+		"sin" : Operation.UnaryOperation(sin),
+		"tan" : Operation.UnaryOperation(tan),
 		"x" : Operation.BinaryOpertaion({$0 * $1}),
 		"-" : Operation.BinaryOpertaion({$0 - $1}),
 		"÷" : Operation.BinaryOpertaion({$0 / $1}),
 		"+" : Operation.BinaryOpertaion({$0 + $1}),
 		"±" : Operation.UnaryOperation({ -$0}),
-		"=" : Operation.Equals
+		"%" : Operation.UnaryOperation({$0 * 0.01}),
+		"=" : Operation.Equals,
+		"clr" : Operation.Constant(0),
+		"^" : Operation.BinaryOpertaion({pow($0, $1)})
 	]
 	
 	private enum Operation {
@@ -41,7 +46,7 @@ class CalculatorBrain {
 			switch operation {
 			case .Constant(let associatedValue):	accumulator = associatedValue
 			case .UnaryOperation(let function):		accumulator = function(accumulator)
-			case .BinaryOpertaion(let function):	pending = PendingBinaryOpertaitonInfo(binaryFunction: function, firstOperand: accumulator)
+			case .BinaryOpertaion(let function):	pending = PendingBinaryOperationInfo(binaryFunction: function, firstOperand: accumulator)
 			case .Equals:
 				executePendingBinaryOperation()
 			}
@@ -55,9 +60,9 @@ class CalculatorBrain {
 		}
 	}
 	
-	private var pending: PendingBinaryOpertaitonInfo?
+	private var pending: PendingBinaryOperationInfo?
 	
-	private struct PendingBinaryOpertaitonInfo  {
+	private struct PendingBinaryOperationInfo  {
 		var binaryFunction: (Double, Double) -> Double
 		var firstOperand: Double
 	}
